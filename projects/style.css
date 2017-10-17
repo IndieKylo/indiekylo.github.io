@@ -3,10 +3,65 @@
 	box-sizing: border-box;
 }
 
-table {
+.ticker-wrapper {
+    box-sizing: content-box;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 32px;
+    background-color: black;
+    border-top: 2px solid silver;
+    border-bottom: 2px solid silver;
+    overflow: hidden;
+    padding-left: 100%;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(0);
+        visibility: visible;
+    }
+    
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.ticker {
+    padding: 6px 0;
+    padding-right: 100%;
+    display: inline-block;
+    white-space: nowrap;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-name: ticker;
+    animation-duration: 30s;
+    color: white;
+}
+
+.ticker-item {
+    display: inline-block;
+}
+
+
+
+.roster {
 	border: 1px solid black;
 	padding: 4px;
 	border-collapse: collapse;
+}
+
+.roster tr:hover {
+    border: 2px solid blue;
+    background-color: aliceblue !important;
+    cursor: pointer;
+}
+
+.content {
+	width: 960px;
+	margin: 0 auto;
+	background-color: whitesmoke;
+	padding: 0;
 }
 
 body {
@@ -19,18 +74,18 @@ th {
 }
 
 td {
-	padding: 4px 24px;
+	padding: 6px 18px;
 }
 
-tbody tr:nth-child(even) {
+.roster tbody tr:nth-child(even) {
 	background-color: lightgray;
 }
 
 .scoreboard {
 	background-color: gray;
 	height: 128px;
-	width: 512px;
-	margin: 4px;
+	width: 600px;
+	margin: 4px auto;
 	padding: 0;
 	border: 2px solid lightgray;
 }
@@ -44,6 +99,8 @@ tbody tr:nth-child(even) {
 	margin: 0;
 	padding: 8px;
 	float: left;
+	text-align: center;
+	font-weight: bold;
 }
 
 .game-team {
@@ -56,6 +113,18 @@ tbody tr:nth-child(even) {
 	float: left;
 }
 
+.game-quarters {
+	font-size: 12px;
+	text-align: center;
+	height: 75%;
+	width: 100%;
+	margin: 0;
+}
+
+.game-quarters td, .game-quarters th {
+	padding: 6px 12px;
+}
+
 .home-team {
 	background-color: green;
 }
@@ -64,12 +133,31 @@ tbody tr:nth-child(even) {
 	background-color: navy;
 }
 
+.college {
+    font-size: 14px;
+    font-style: italic;
+    font-weight: normal;
+}
+
+.player-tooltip {
+    padding: 4px;
+}
+
 .game-team .score {
 	color: white;
 	font-family: sans-serif;
 	font-weight: bold;
 	font-size: 56px;
 	margin: 0;
+}
+
+.game-team .timeouts {
+	color: gold;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 56px;
+	margin: 0;
+	margin-top: -22px;
 }
 
 .game-team .ball {
@@ -82,4 +170,23 @@ tbody tr:nth-child(even) {
 	font-weight: bold;
 	font-size: 20px;
 	margin: 0;
+}
+
+.game-log {
+	list-style-type: none;
+	border: 2px solid black;
+	padding: 16px;
+}
+
+.game-log li {
+	border-bottom: 1px solid lightgrey;
+	margin-bottom: 8px;
+	margin-left: 0;
+}
+
+.play-info {
+	display: block;
+	font-size: 14px;
+	font-style: italic;
+	font-weight: bold;
 }

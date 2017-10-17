@@ -3,36 +3,104 @@
 	<head>
 		<title>American Football Manager</title>
 		<link rel="stylesheet" href="style.css" type="text/css">
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	</head>
 	<body>
-		<div class="scoreboard">
-			<div class="game-team home-team">
-				<span>HOME</span>
-				<div class="score">12</div>
-				<span class="ball">&#127944;</span>
+		<div class="content">
+			<div class="scoreboard">
+				<div class="game-team home-team">
+					<span>HOME</span>
+					<div id="home-score" class="score">12</div>
+					<div class="timeouts">&#8226; &#8226; &#8226;</div>
+				</div>
+				<div class="game-info">
+					<span id="home-ball" class="ball"></span>
+					<span id="game-quarter"></span> <span id="game-mins">15</span>:<span id="game-secs">00</span>
+					<span id="away-ball" class="ball"></span> 
+					<table class="game-quarters">
+						<thead>
+							<tr>
+								<th></th>
+								<th>1</th>
+								<th>2</th>
+								<th>3</th>
+								<th>4</th>
+								<th>OT</th>
+								<th>T</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Home</td>
+								<td>12</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+							<tr>
+								<td>Away</td>
+								<td>37</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+								<td>-</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="game-team away-team">
+					<span>AWAY</span>
+					<div id="away-score" class="score">37</div>
+					<div class="timeouts">&#8226; &#8226; &#8226;</div>
+				</div>
 			</div>
-			<div class="game-info">
-			10:00 Q4
-			</div>
-			<div class="game-team away-team">
-				<span>AWAY</span>
-				<div class="score">37</div>
-			</div>
+			<ul class="game-log">
+				<li>
+					<span class="play-info">13:22 2nd - HOME 2nd & 10, at HOME 20</span>
+					Jack Lynch rushed to the right for 45 yard loss, tackled by Kylo.
+				</li>
+				<li>
+					<span class="play-info">13:22 2nd - HOME 2nd & 10, at HOME 20</span>
+					Jack Lynch rushed to the right for 45 yard loss, tackled by Kylo.
+				</li>
+				<li>
+					<span class="play-info">13:22 2nd - HOME 2nd & 10, at HOME 20</span>
+					Jack Lynch rushed to the right for 45 yard loss, tackled by Kylo.
+				</li>
+				<li>
+					<span class="play-info">13:22 2nd - HOME 2nd & 10, at HOME 20</span>
+					Jack Lynch rushed to the right for 45 yard loss, tackled by Kylo.
+				</li>
+			
+			</ul>
+            <h3>2017 Draft Class</h3>
+			<table class="roster">
+				<thead>
+					<tr>
+						<th>Pos</th>
+						<th>Name</th>
+						<th>Age</th>
+						<th>Height</th>
+						<th>Weight</th>
+						<th>Draft</th>
+					</tr>
+				</thead>
+				<tbody id="draft-list">
+				</tbody>
+			</table>
+            <canvas id="game-canvas"></canvas>
 		</div>
-		<table class="roster">
-			<thead>
-				<tr>
-					<th>Last Name</th>
-					<th>First Name</th>
-					<th>Age</th>
-					<th>Position</th>
-					<th>Draft</th>
-				</tr>
-			</thead>
-			<tbody id="draft-list">
-			</tbody>
-		</table>
-		<canvas id="game-canvas">
+        <div class="ticker-wrapper">
+            <div class="ticker">
+                <div class="ticker-item">IS J. LYNCHO ELITE?</div> &middot;
+                <div class="ticker-item">KYLO RUSHES FOR 281 YARDS IN DIVISIONAL ROUND</div> &middot; 
+                <div class="ticker-item">ASTROS WIN BACK TO BACK WORLD SERIES</div> &middot;
+                <div class="ticker-item">UNDERWEIGHT KICKER OUTBREAK?</div>
+            </div>
+        </div>
 		<script src="game.js"></script>
 	</body>
 </html>
