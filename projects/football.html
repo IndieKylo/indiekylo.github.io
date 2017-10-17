@@ -5,12 +5,32 @@
 		<link rel="stylesheet" href="style.css" type="text/css">
 	</head>
 	<body>
-		<table id="draft-list" class="roster">
-			<tr>
-				<th>Last Name</th>
-				<th>First Name</th>
-				<th>Age</th>
-			</tr>
+		<div class="scoreboard">
+			<div class="game-team home-team">
+				<span>HOME</span>
+				<div class="score">12</div>
+				<span class="ball">&#127944;</span>
+			</div>
+			<div class="game-info">
+			10:00 Q4
+			</div>
+			<div class="game-team away-team">
+				<span>AWAY</span>
+				<div class="score">37</div>
+			</div>
+		</div>
+		<table class="roster">
+			<thead>
+				<tr>
+					<th>Last Name</th>
+					<th>First Name</th>
+					<th>Age</th>
+					<th>Position</th>
+					<th>Draft</th>
+				</tr>
+			</thead>
+			<tbody id="draft-list">
+			</tbody>
 		</table>
 		<canvas id="game-canvas">
 		<script src="game.js"></script>

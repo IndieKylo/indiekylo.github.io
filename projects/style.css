@@ -1,14 +1,85 @@
 * {
 	font-family: "Consolas", monospaced;
+	box-sizing: border-box;
 }
 
-
-table, th, td {
+table {
 	border: 1px solid black;
+	padding: 4px;
 	border-collapse: collapse;
-	padding: 8px;
 }
 
-.roster:nth-child(2) {
+body {
+	margin: 0;
+	padding 16px;
+}
+
+th {
+	border-bottom: 2px solid gray;
+}
+
+td {
+	padding: 4px 24px;
+}
+
+tbody tr:nth-child(even) {
+	background-color: lightgray;
+}
+
+.scoreboard {
 	background-color: gray;
+	height: 128px;
+	width: 512px;
+	margin: 4px;
+	padding: 0;
+	border: 2px solid lightgray;
+}
+
+.game-info {
+	width: 50%;
+	height: 100%;
+	background-color: black;
+	color: white;
+	display: inline-block;
+	margin: 0;
+	padding: 8px;
+	float: left;
+}
+
+.game-team {
+	padding: 6px;
+	width: 25%;
+	height: 100%;
+	text-align: center;
+	display: inline-block;
+	margin: 0;
+	float: left;
+}
+
+.home-team {
+	background-color: green;
+}
+
+.away-team {
+	background-color: navy;
+}
+
+.game-team .score {
+	color: white;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 56px;
+	margin: 0;
+}
+
+.game-team .ball {
+	font-size: 18px;
+}
+
+.game-team span {
+	color: white;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 20px;
+	margin: 0;
 }
