@@ -328,8 +328,8 @@ function gameLoop() {
 
 }
 
-function RunPlay(gain=0) {
-	for (let i = 0; i < 30; i++) {
+function RunPlay(gain=0, loops=30) {
+	for (let i = 0; i < loops; i++) {
 		let playResult = $("<li></li>");
 		
 		let playInfo = $("<span></span>");
