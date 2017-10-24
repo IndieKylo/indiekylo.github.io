@@ -1,0 +1,36 @@
+[{
+  "id": 1,
+  "first_name": "Bondon",
+  "last_name": "Gravie",
+  "email": "bgravie0@businesswire.com",
+  "gender": "Male",
+  "ip_address": "19.121.187.6"
+}, {
+  "id": 2,
+  "first_name": "Hazlett",
+  "last_name": "Cleminson",
+  "email": "hcleminson1@last.fm",
+  "gender": "Male",
+  "ip_address": "39.191.175.129"
+}, {
+  "id": 3,
+  "first_name": "Dodi",
+  "last_name": "Loney",
+  "email": "dloney2@ox.ac.uk",
+  "gender": "Female",
+  "ip_address": "227.57.81.122"
+}, {
+  "id": 4,
+  "first_name": "Fee",
+  "last_name": "Packer",
+  "email": "fpacker3@abc.net.au",
+  "gender": "Male",
+  "ip_address": "209.88.25.15"
+}, {
+  "id": 5,
+  "first_name": "Valentijn",
+  "last_name": "Prichet",
+  "email": "vprichet4@jigsy.com",
+  "gender": "Male",
+  "ip_address": "214.34.232.209"
+}]

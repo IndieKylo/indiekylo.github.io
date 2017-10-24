@@ -16,7 +16,7 @@
 				<div class="game-info">
 					<span id="home-ball" class="ball"></span>
 					<span id="game-quarter"></span> <span id="game-mins">15</span>:<span id="game-secs">00</span>
-					<span id="away-ball" class="ball"></span> 
+					<span id="away-ball" class="ball"></span>
 					<table class="game-quarters">
 						<thead>
 							<tr>
@@ -62,24 +62,17 @@
 					<span class="play-info">13:22 2nd - HOME 2nd & 10, at HOME 20</span>
 					Jack Lynch rushed to the right for 45 yard loss, tackled by Kylo.
 				</li>
-				<li>
-					<span class="play-info">13:22 2nd - HOME 2nd & 10, at HOME 20</span>
-					Jack Lynch rushed to the right for 45 yard loss, tackled by Kylo.
-				</li>
-				<li>
-					<span class="play-info">13:22 2nd - HOME 2nd & 10, at HOME 20</span>
-					Jack Lynch rushed to the right for 45 yard loss, tackled by Kylo.
-				</li>
-				<li>
-					<span class="play-info">13:22 2nd - HOME 2nd & 10, at HOME 20</span>
-					Jack Lynch rushed to the right for 45 yard loss, tackled by Kylo.
-				</li>
-			
 			</ul>
+			<input type="button" value="Run Play" onclick="RunPlay();">
+			<input type="button" value="Lose 5 Yards" onclick="RunPlay(-5);">
+			<div id="team-select">
+
+			</div>
             <h3>2017 Draft Class</h3>
 			<table class="roster">
 				<thead>
 					<tr>
+                        <th>Rank</th>
 						<th>Pos</th>
 						<th>Name</th>
 						<th>Age</th>
@@ -95,12 +88,13 @@
 		</div>
         <div class="ticker-wrapper">
             <div class="ticker">
+				&middot;
                 <div class="ticker-item">IS J. LYNCHO ELITE?</div> &middot;
-                <div class="ticker-item">KYLO RUSHES FOR 281 YARDS IN DIVISIONAL ROUND</div> &middot; 
+                <div class="ticker-item">KYLO RUSHES FOR 281 YARDS IN DIVISIONAL ROUND</div> &middot;
                 <div class="ticker-item">ASTROS WIN BACK TO BACK WORLD SERIES</div> &middot;
-                <div class="ticker-item">UNDERWEIGHT KICKER OUTBREAK?</div>
             </div>
         </div>
+		<script src="league.js"></script>
 		<script src="game.js"></script>
 	</body>
 </html>
