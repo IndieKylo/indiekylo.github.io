@@ -328,7 +328,7 @@ function gameLoop() {
 
 }
 
-function RunPlay(gain=0, loops=30) {
+function RunPlay(gain=0, loops=4) {
 	for (let i = 0; i < loops; i++) {
 		let playResult = $("<li></li>");
 		
@@ -371,11 +371,14 @@ function RunPlay(gain=0, loops=30) {
 			case 4:
 				_suffix = "th";
 			break;
+			default:
+				_suffix = "st";
+			break;
 		}
 
 		//Run
-		playInfo.text(cg.GameData["minutesRemaining"] + ":" + Math.trunc(cg.GameData["secondsRemaining"]) + " " + cg.GameData["quarter"] + " - " + _ball + " " + 
-		cg.GameData["down"] + _suffix + " & " + _remaining + ", at " + _side + " " + cg.GameData["ballAt"]);
+		playInfo.text(cg.GameData["minutesRemaining"] + ":" + Math.trunc(cg.GameData["secondsRemaining"]) + " " + cg.GameData["quarter"] + "st Quarter - " + _ball + " " + 
+		cg.GameData["down"] +  _suffix + " & " + _remaining + ", at " + _side + " " + cg.GameData["ballAt"]);
 		if (playType == 1) {
 			let outcome = randomRange(0,100);
 			if (outcome > 99) {
@@ -469,15 +472,20 @@ function RunPlay(gain=0, loops=30) {
 			cg.GameData["down"] = 1;
 			cg.GameData["distance"] = 10;
 			cg.GameData["ballAt"] = 25;
-			cg.GameData["ballSide"] = 1;
 			cg.GameData["redzone"] = false;
 			cg.GameData["goalline"] = false;
 			cg.GameData["homeBall"] = !cg.GameData["homeBall"];
+			if (cg.GameData["homeBall"]) {
+				cg.GameData["ballSide"] = 1;
+			} else {
+				cg.GameData["ballSide"] = -1;
+			}
 		}
 			
 
 		playResult.prepend(playInfo);
 		$(".game-log").append(playResult);
+		$(".game-log").scrollTop($(".game-log").prop("scrollHeight")); 
 	}
 }
 
