@@ -542,8 +542,8 @@ function RunPlay(gain=0, loops=1) {
 		$("#down-distance").html(cg.GameData["down"] +  _suffix + " & " + cg.GameData["distance"]);
 
 		playResult.prepend(playInfo);
-		$(".game-log").append(playResult);
-		$(".game-log").scrollTop($(".game-log").prop("scrollHeight")); 
+		$(".game-log").prepend(playResult);
+		//$(".game-log").scrollTop($(".game-log").prop("scrollHeight")); 
 	}
 }
 
