@@ -272,15 +272,24 @@ function gameInit() {
 		$("#team-select").append(teamBlock);
 	});
 	currentGame = new Game(TEAM_LIST[0],TEAM_LIST[1]);
+	setInterval(RunPlay, 3000);
 	gameLoop();
 }
 
 
 function PassTime(amount) {
-	currentGame.GameData["timeRemaining"] -= amount;
+	if (currentGame.GameData["gameActive"]) {
+		if (currentGame.GameData["timeRemaining"] - amount > 0) {
+			currentGame.GameData["timeRemaining"] -= amount;
 
-	currentGame.GameData["secondsRemaining"] = currentGame.GameData["timeRemaining"] % 60;
-	currentGame.GameData["minutesRemaining"] = Math.trunc(currentGame.GameData["timeRemaining"] / 60);
+			currentGame.GameData["secondsRemaining"] = currentGame.GameData["timeRemaining"] % 60;
+			currentGame.GameData["minutesRemaining"] = Math.trunc(currentGame.GameData["timeRemaining"] / 60);
+		} else {
+			currentGame.GameData["secondsRemaining"] = 0;
+			currentGame.GameData["minutesRemaining"] = 0;
+			currentGame.GameData["gameActive"] = false
+		}
+	}
 }
 
 let currentGame = {};
@@ -397,8 +406,16 @@ function RunPlay(gain=0, loops=1) {
 			break;
 		}
 
+		let _seconds = "00";
+
 		//Run
-		playInfo.text(cg.GameData["minutesRemaining"] + ":" + Math.trunc(cg.GameData["secondsRemaining"]) + " " + cg.GameData["quarter"] + "st Quarter - " + _ball + " " + 
+		if (currentGame.GameData["secondsRemaining"] < 10) {
+			_seconds = "0" + currentGame.GameData["secondsRemaining"];
+		} else {
+			_seconds = currentGame.GameData["secondsRemaining"];
+		}
+
+		playInfo.text(cg.GameData["minutesRemaining"] + ":" + _seconds + " " + cg.GameData["quarter"] + "st Quarter - " + _ball + " " + 
 		cg.GameData["down"] +  _suffix + " & " + _remaining + ", at " + _side + " " + cg.GameData["ballAt"]);
 		if (playType == 1) {
 			let outcome = randomRange(0,100);
@@ -444,7 +461,7 @@ function RunPlay(gain=0, loops=1) {
 			playResult.text("Somehow, you lost 5 yards");
 		}
 
-		PassTime(6 + Math.abs(_gain) * 2);
+		PassTime(6 + randomRange(1,4) + Math.abs(_gain) * 2);
 
 		// Update game info
 		if (_gain >= cg.GameData["distance"]) {
@@ -463,7 +480,6 @@ function RunPlay(gain=0, loops=1) {
 				cg.GameData["down"] = 1;
 				cg.GameData["distance"] = 10;
 				cg.GameData["homeBall"] = !cg.GameData["homeBall"];
-				// TODO: Give ball to other team
 			}
 		}
 
