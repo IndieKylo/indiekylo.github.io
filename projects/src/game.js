@@ -11,9 +11,6 @@ const PLAY_TYPE = {
 	KICKOFF: {},
 }
 
-
-let draftClass = [];
-
 let PlayerGenerator = (function() {
 
 	// Unique player index
@@ -189,44 +186,53 @@ function draftCreate() {
 
 	let posArray = Object.keys(positions);
 
-	for (let i = 0; i < 100; i++) {
+	for (let i = 0; i < TEAM_LIST.length; i++) {
 
-		let pos = posArray[randomRange(0,posArray.length-1)];
+		let _currentTeam = TEAM_LIST[i];
 
-        let suffix = "";
+		for (let j = 0; j < 53; j++) {
 
-        if (Math.random() > 0.95) {
-            suffix = PlayerGenerator.GetSuffix();
-        }
+			let _pos = posArray[randomRange(0,posArray.length-1)];
 
-		let player = {
-            index: PlayerGenerator.GetPlayerIndex(),
-			firstName: PlayerGenerator.GetFirstName(),
-			lastName: PlayerGenerator.GetLastName(),
-            suffix: suffix,
-			age: randomRange(20,25),
-			city: PlayerGenerator.GetCity(),
-			position: pos,
-			height: randomRange(positions[pos].minHeight,positions[pos].maxHeight),
-			weight: randomRange(positions[pos].minWeight,positions[pos].maxWeight),
-            college: PlayerGenerator.GetCollege(),
+			let _suffix = "";
 
-            combine: {
-                forty: randomRangeRaw(4.2,5.7),
-                bench: randomRange(10,35),
-            }
-		};
+			if (Math.random() > 0.95) {
+				_suffix = PlayerGenerator.GetSuffix();
+			}
 
-		draftClass.push(player);
+			let player = {
+				index: PlayerGenerator.GetPlayerIndex(),
+				firstName: PlayerGenerator.GetFirstName(),
+				lastName: PlayerGenerator.GetLastName(),
+				suffix: _suffix,
+				fullName: function() {
+					return this.firstName + " " + this.lastName + " " + this.suffix; 
+				},
+				age: randomRange(20,25),
+				city: PlayerGenerator.GetCity(),
+				position: _pos,
+				height: randomRange(positions[_pos].minHeight,positions[_pos].maxHeight),
+				weight: randomRange(positions[_pos].minWeight,positions[_pos].maxWeight),
+				college: PlayerGenerator.GetCollege(),
 
+				combine: {
+					forty: randomRangeRaw(4.2,5.7),
+					bench: randomRange(10,35),
+				}
+			};
+
+			_currentTeam.Roster.push(player);
+		}
 
 	}
 
 
 	let draftListElement = $("#draft-list");
 
+	$("#roster-title").text("2017 " + TEAM_LIST[0].City + " " + TEAM_LIST[0].Name + " Roster");
 
-	draftClass.forEach(function (player) {
+
+	TEAM_LIST[0].Roster.forEach(function (player) {
 		let row = $('<tr onclick="playerTooltip(this)" data-index='+player.index+'></tr>');
 
 		row.html("<td>"+(player.index+1)+"</td><td>" + positions[player.position].abbr +
@@ -255,9 +261,8 @@ function playerTooltip(e) {
 
 
 function gameInit() {
-	draftCreate();
 	BuildLeague();
-	
+	draftCreate();	
 	TEAM_LIST.forEach(function (team) {
 		let teamBlock = $("<div></div>");
 		teamBlock.addClass("team-block");
@@ -266,12 +271,19 @@ function gameInit() {
 		teamBlock.css("color", team.GetSecondary());
 		$("#team-select").append(teamBlock);
 	});
-
+	currentGame = new Game(TEAM_LIST[0],TEAM_LIST[1]);
 	gameLoop();
 }
 
 
-let currentGame = new Game(null,null);
+function PassTime(amount) {
+	currentGame.GameData["timeRemaining"] -= amount;
+
+	currentGame.GameData["secondsRemaining"] = currentGame.GameData["timeRemaining"] % 60;
+	currentGame.GameData["minutesRemaining"] = Math.trunc(currentGame.GameData["timeRemaining"] / 60);
+}
+
+let currentGame = {};
 
 function gameLoop() {
 	window.requestAnimationFrame(gameLoop);
@@ -290,24 +302,12 @@ function gameLoop() {
 
 	if (currentGame.GameData["homeBall"]) {
 		homeBall.html("&#127944;");
+		awayBall.html("");
 	} else {
 		awayBall.html("&#127944;");
+		homeBall.html("");
 	}
 
-	if (currentGame.GameData["gameActive"]) {
-		currentGame.GameData["secondsRemaining"] -= 12 * deltaTime;
-
-		if (currentGame.GameData["secondsRemaining"] <= 0) {
-
-			if (currentGame.GameData["minutesRemaining"] <= 0) {
-				currentGame.GameData["gameActive"] = false;
-			} else {
-				currentGame.GameData["secondsRemaining"] = 60;
-				currentGame.GameData["minutesRemaining"] -= 1;
-			}
-		}
-
-	}
 
 	mins.html(currentGame.GameData["minutesRemaining"]);
 
@@ -317,10 +317,31 @@ function gameLoop() {
 		secs.html(Math.trunc(currentGame.GameData["secondsRemaining"]));
 	}
 
-	quarter.html("Q" + currentGame.GameData["quarter"]);
+	let _quarter = "1st";
+	switch(currentGame.GameData["quarter"]) {
+		case 1:
+			_quarter = "1st";
+		break;
+		case 2:
+			_quarter = "2nd";
+		break;
+		case 3:
+			_quarter = "3rd";
+		break;
+		case 4:
+			_quarter = "4th";
+		break;
+		case 5:
+			_quarter = "OT";
+		break;
+	}
+
+	quarter.html(_quarter);
 
 	homeScore.html(currentGame.GameData["homeScore"]);
 	awayScore.html(currentGame.GameData["awayScore"]);
+
+	// TODO: Make score not update every frame
 
 
 
@@ -328,7 +349,7 @@ function gameLoop() {
 
 }
 
-function RunPlay(gain=0, loops=4) {
+function RunPlay(gain=0, loops=1) {
 	for (let i = 0; i < loops; i++) {
 		let playResult = $("<li></li>");
 		
@@ -393,7 +414,7 @@ function RunPlay(gain=0, loops=4) {
 				_gain = randomRange(-3,2);
 			}
 
-			playResult.text("Kylo rushed to the right for " + Math.min(_gain,cg.GameData.toEndzone()) + " yards.");
+			playResult.text(cg.Home.Roster[randomRange(0,cg.Home.Roster.length-1)].fullName() + " rushed to the right for " + Math.min(_gain,cg.GameData.toEndzone()) + " yards.");
 		} else {
 			let outcome = randomRange(0,100);
 			if (outcome > 99) {
@@ -411,7 +432,8 @@ function RunPlay(gain=0, loops=4) {
 			if (_gain == 0) {
 				playResult.text("Incomplete pass.");
 			} else {
-				playResult.text("Kylo completed a pass for " + Math.min(_gain,cg.GameData.toEndzone()) + " yards.");
+				playResult.text(cg.Home.Roster[randomRange(0,cg.Home.Roster.length-1)].fullName() + " completed a pass to " + cg.Home.Roster[randomRange(0,cg.Home.Roster.length-1)].fullName() +
+				" for " + Math.min(_gain,cg.GameData.toEndzone()) + " yards.");
 			}
 
 			
@@ -421,6 +443,8 @@ function RunPlay(gain=0, loops=4) {
 			_gain = gain;
 			playResult.text("Somehow, you lost 5 yards");
 		}
+
+		PassTime(6 + Math.abs(_gain) * 2);
 
 		// Update game info
 		if (_gain >= cg.GameData["distance"]) {
@@ -481,7 +505,25 @@ function RunPlay(gain=0, loops=4) {
 				cg.GameData["ballSide"] = -1;
 			}
 		}
+		switch(cg.GameData["down"]) {
+			case 1:
+				_suffix = "st";
+			break;
+			case 2:
+				_suffix = "nd";
+			break;
+			case 3:
+				_suffix = "rd";
+			break;
+			case 4:
+				_suffix = "th";
+			break;
+			default:
+				_suffix = "st";
+			break;
+		}
 			
+		$("#down-distance").html(cg.GameData["down"] +  _suffix + " & " + cg.GameData["distance"]);
 
 		playResult.prepend(playInfo);
 		$(".game-log").append(playResult);

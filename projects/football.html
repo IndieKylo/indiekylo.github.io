@@ -2,60 +2,31 @@
 <html>
 	<head>
 		<title>American Football Manager</title>
-		<link rel="stylesheet" href="style.css" type="text/css">
+		<link rel="stylesheet" href="css/style.css" type="text/css">
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	</head>
 	<body>
 		<div class="content">
 			<div class="scoreboard">
 				<div class="game-team home-team">
-					<span>HOME</span>
-					<div id="home-score" class="score">12</div>
-					<div class="timeouts">&#8226; &#8226; &#8226;</div>
-				</div>
-				<div class="game-info">
 					<span id="home-ball" class="ball"></span>
-					<span id="game-quarter"></span> <span id="game-mins">15</span>:<span id="game-secs">00</span>
-					<span id="away-ball" class="ball"></span>
-					<table class="game-quarters">
-						<thead>
-							<tr>
-								<th></th>
-								<th>1</th>
-								<th>2</th>
-								<th>3</th>
-								<th>4</th>
-								<th>OT</th>
-								<th>T</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>Home</td>
-								<td>-</td>
-								<td>-</td>
-								<td>-</td>
-								<td>-</td>
-								<td>-</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td>Away</td>
-								<td>-</td>
-								<td>-</td>
-								<td>-</td>
-								<td>-</td>
-								<td>-</td>
-								<td>-</td>
-							</tr>
-						</tbody>
-					</table>
+					<div class="team-name">SEA</div>
+					<div class="timeouts">_ _ _</div>
 				</div>
+				<div id="home-score" class="score">12</div>
 				<div class="game-team away-team">
-					<span>AWAY</span>
-					<div id="away-score" class="score">37</div>
-					<div class="timeouts">&#8226; &#8226; &#8226;</div>
+					<span id="away-ball" class="ball"></span>
+					<div class="team-name">HOU</div>
+					<div class="timeouts">_ _ _</div>
 				</div>
+				<div id="away-score" class="score">37</div>
+				<div class="game-info">
+					<span id="game-quarter"></span>
+					<span id="game-mins">15</span>:<span id="game-secs">00</span>
+				</div>
+				<div class="down-info">
+					<span id="down-distance">1st & 10</span>
+				</div>				
 			</div>
 			<ul class="game-log">
 			</ul>
@@ -63,7 +34,7 @@
 			<div id="team-select">
 
 			</div>
-            <h3>2017 Draft Class</h3>
+            <h3 id="roster-title">2017 Draft Class</h3>
 			<table class="roster">
 				<thead>
 					<tr>
@@ -81,15 +52,17 @@
 			</table>
             <canvas id="game-canvas"></canvas>
 		</div>
-        <div class="ticker-wrapper">
-            <div class="ticker">
-				&middot;
-                <div class="ticker-item">THIS GAME IS A PRE-PRE-ALPHA</div> &middot;
-                <div class="ticker-item">KYLO RUSHES FOR 281 YARDS IN DIVISIONAL ROUND</div> &middot;
-                <div class="ticker-item">ASTROS WIN BACK TO BACK WORLD SERIES</div> &middot;
-            </div>
-        </div>
-		<script src="league.js"></script>
-		<script src="game.js"></script>
+		<div class="ticker-border">
+			<div class="ticker-wrapper">
+				<div class="ticker">
+					&middot;
+					<div class="ticker-item">THIS GAME IS A PRE-PRE-ALPHA</div> &middot;
+					<div class="ticker-item">KYLO RUSHES FOR 281 YARDS IN DIVISIONAL ROUND</div> &middot;
+					<div class="ticker-item">ASTROS WIN BACK TO BACK WORLD SERIES</div> &middot;
+				</div>
+			</div>
+		</div>		
+		<script src="src/league.js"></script>
+		<script src="src/game.js"></script>
 	</body>
 </html>

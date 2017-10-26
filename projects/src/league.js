@@ -92,11 +92,14 @@ function Team(city, name, abbr) {
 		_division = division;
 	}
 
+	let _roster = [];
+
 	return {
 
 		Name: name,
 		City: city,
 		Abbr: abbr,
+		Roster: _roster,
 
 		SetColors: setColors,
 		GetPrimary: getPrimary,
@@ -129,6 +132,7 @@ function Game(home,away) {
 	let _gameData = {
 		minutesRemaining: 15,
 		secondsRemaining: 00,
+		timeRemaining: 900,
 		quarter: 1,
 		homeScore: 0,
 		awayScore: 0,
@@ -162,6 +166,8 @@ function Game(home,away) {
 
 	return {
 		GameData: _gameData,
+		Home: _home,
+		Away: _away,
 	};
 }
 

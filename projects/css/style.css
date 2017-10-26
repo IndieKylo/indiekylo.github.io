@@ -3,17 +3,26 @@
 	box-sizing: border-box;
 }
 
+.ticker-border {
+	position: fixed;
+	
+    bottom: 0;
+	height: 32px;
+	width: 100%;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	box-sizing: content-box;
+	background-image: linear-gradient(to top, rgb(41, 41, 41), rgb(236, 236, 236));
+    
+}
+
 .ticker-wrapper {
     box-sizing: content-box;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    height: 32px;
-    background-color: black;
-    border-top: 2px solid silver;
-    border-bottom: 2px solid silver;
-    overflow: hidden;
-    padding-left: 100%;
+
+	width: 100%;
+	overflow: hidden;
+	padding-left: 100%;
+	background-image: url("../img/carbon.png");
 }
 
 #team-select {
@@ -45,24 +54,30 @@
 
 .ticker {
     padding: 6px 0;
-    padding-right: 100%;
+	padding-right: 100%;
+	height: 100%;
     display: inline-block;
     white-space: nowrap;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
     animation-name: ticker;
     animation-duration: 30s;
-    color: white;
+	color: white;
 }
 
 .ticker-item {
-    display: inline-block;
+	display: inline-flex;
+	font-size: 16px;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	align-items: center;	
+	height: 100%;
 }
 
 .roster {
 	border: 1px solid black;
 	padding: 4px;
 	border-collapse: collapse;
+	background-color: white;
 }
 
 .roster tr:hover {
@@ -74,12 +89,13 @@
 .content {
 	width: 960px;
 	margin: 0 auto;
-	background-color: whitesmoke;
+	background-color:whitesmoke;
 	padding: 0;
 }
 
 body {
 	margin: 0;
+	background-color: #071a05
 }
 
 th {
@@ -95,53 +111,65 @@ td {
 }
 
 .scoreboard {
+	box-sizing: content-box;
 	background-color: gray;
-	height: 128px;
+	height: 32px;
 	width: 600px;
-	margin: 4px auto;
-	padding: 0;
-	border: 2px solid lightgray;
+	margin: 0px auto;
+	padding: 4px;
+	background-image:
+	linear-gradient(to top, rgb(41, 41, 41), rgb(236, 236, 236));
 }
 
 .game-info {
-	width: 50%;
 	height: 100%;
-	background-color: black;
-	color: white;
+	background-image: linear-gradient(to bottom, white, silver);
+	color: black;
 	margin: 0;
-	padding: 8px;
-	float: left;
-	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	font-weight: bold;
+	float: left;
+	font-size: 18px;
+	padding: 4px;
+	width: 20%;
+}
+
+.down-info {
+	display: flex;
+	background-image: url("../img/carbon2.png");
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 24px;
+	align-items: center;
+	justify-content: center;
+	padding: 0 4px;
+	height: 100%;
+	color: white;
 }
 
 .game-team {
-	padding: 6px;
-	width: 25%;
+	padding: 4px;
+	width: 20%;
 	height: 100%;
-	text-align: center;
 	margin: 0;
 	float: left;
 }
 
-.game-quarters {
-	font-size: 12px;
-	text-align: center;
-	height: 75%;
-	width: 100%;
-	margin: 0;
+#game-quarter {
+	border-right: 2px solid gray;
+	margin-right: 10px;
+	padding-right: 10px;
 }
 
-.game-quarters td, .game-quarters th {
-	padding: 6px 12px;
-}
 
 .home-team {
-	background-color: green;
+	background-image: linear-gradient(to bottom, green, darkgreen);
 }
 
 .away-team {
-	background-color: navy;
+	background-image: linear-gradient(to bottom, darkblue, navy);
 }
 
 .college {
@@ -154,33 +182,44 @@ td {
     padding: 4px;
 }
 
-.game-team .score {
+.score {
 	color: white;
+	background-image: url("../img/carbon2.png");
 	font-family: sans-serif;
 	font-weight: bold;
-	font-size: 56px;
+	font-size: 24px;
 	margin: 0;
+	height: 100%;
+	float: left;
+	width: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .game-team .timeouts {
 	color: gold;
 	font-family: sans-serif;
 	font-weight: bold;
-	font-size: 56px;
+	font-size: 32px;
 	margin: 0;
-	margin-top: -22px;
+	margin-top: -30px;
+	margin-left: 32px;
+
 }
 
 .game-team .ball {
-	font-size: 18px;
+	font-size: 16px;
+	display: inline-block;
 }
 
-.game-team span {
+.team-name {
 	color: white;
 	font-family: sans-serif;
 	font-weight: bold;
 	font-size: 20px;
 	margin: 0;
+	display: inline-block;
 }
 
 .game-log {
@@ -189,6 +228,7 @@ td {
 	padding: 16px;
 	height: 256px;
 	overflow: auto;
+	background-color: white;
 }
 
 .game-log li {
