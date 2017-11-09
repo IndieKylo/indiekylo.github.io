@@ -3,28 +3,25 @@
 	<head>
 		<title>American Football Manager</title>
 		<link href="https://fonts.googleapis.com/css?family=Saira" rel="stylesheet">
-		<link rel="stylesheet" href="css/style.css" type="text/css">
+		<link rel="stylesheet" href="../css/style.css" type="text/css">
 	</head>
 	<body>
-		<div class="nav">
-			
-		</div>
 		<div class="content">
 			<div class="scoreboard">
-				<div class="game-team home-team">
-					<div class="team-name">SEA</div>
+				<div class="game-team home-gradient">
+					<div class="home-abbr team-name">SEA</div>
 					<span id="home-ball" class="ball"></span>
 					<div class="timeouts">_ _ _</div>
 				</div>
 				<div id="home-score" class="score">12</div>
-				<div class="game-team away-team">					
-					<div class="team-name">HOU</div>
+				<div class="game-team away-gradient">					
+					<div class="away-abbr team-name">HOU</div>
 					<span id="away-ball" class="ball"></span>
 					<div class="timeouts">_ _ _</div>
 				</div>
 				<div id="away-score" class="score">37</div>
 				<div class="game-info">
-					<span id="game-quarter"></span>
+					<span id="game-quarter">1st</span>
 					<span id="game-mins">15</span>:<span id="game-secs">00</span>
 				</div>
 				<div class="down-info">
@@ -32,6 +29,33 @@
 				</div>				
 			</div>
 			<ul class="game-log"></ul>
+			<table class="score-details">
+				<thead>
+					<tr>
+                        <th>HOME</th>
+						<th></th>
+						<th>AWAY</th>
+					</tr>
+				</thead>
+				<tbody
+					<tr>
+                        <td class="home-pass-yards">-</td>
+						<td>Passing Yards</td>
+						<td class="away-pass-yards">-</td>
+					</tr>
+					<tr>
+                        <td class="home-rush-yards">-</td>
+						<td>Rushing Yards</td>
+						<td class="away-rush-yards">-</td>
+					</tr>
+					<tr>
+                        <td class="home-total-yards">-</td>
+						<td>Total Yards</td>
+						<td class="away-total-yards">-</td>
+					</tr>
+				</tbody>
+			</table>
+
             <h3 id="roster-title">2017 Draft Class</h3>
 			<table class="roster">
 				<thead>
@@ -58,7 +82,5 @@
 				</div>
 			</div>
 		</div>		
-		<script src="src/league.js"></script>
-		<script src="src/game.js"></script>
-	</body>
+	<script type="text/javascript" src="main.bundle.js"></script></body>
 </html>

@@ -17,7 +17,7 @@
     bottom: 0;
 	height: 32px;
 	width: 100%;
-	padding: 4px;
+	padding: 4px 0;
 	box-sizing: content-box;
 	background-image: linear-gradient(to top, rgb(41, 41, 41), rgb(236, 236, 236));
     
@@ -80,7 +80,7 @@
 	height: 100%;
 }
 
-.roster {
+table {
 	border: 1px solid black;
 	padding: 4px;
 	border-collapse: collapse;
@@ -114,7 +114,7 @@ td {
 	padding: 6px 18px;
 }
 
-.roster tbody tr:nth-child(even) {
+tbody tr:nth-child(even) {
 	background-color: lightgray;
 }
 
@@ -178,11 +178,11 @@ td {
 }
 
 
-.home-team {
+.home-gradient {
 	background-image: linear-gradient(to bottom, green, black);
 }
 
-.away-team {
+.away-gradient {
 	background-image: linear-gradient(to bottom, darkblue, black);
 }
 
