@@ -2,6 +2,17 @@
 	box-sizing: border-box;
 }
 
+h3 {
+	font-family: 'Saira', sans-serif;	
+}
+
+.metal-border {
+	border: 4px solid transparent;
+	border-image: linear-gradient(to top, rgb(41, 41, 41), rgb(236, 236, 236)) 1;
+	box-shadow: inset 0px 0px 10px 6px rgba(0,0,0,0.75);
+}
+
+
 .nav {
 	width: 100%;
 	height: 32px;
@@ -13,23 +24,21 @@
 
 .ticker-border {
 	position: fixed;
-	
     bottom: 0;
 	height: 32px;
 	width: 100%;
 	padding: 4px 0;
 	box-sizing: content-box;
 	background-image: linear-gradient(to top, rgb(41, 41, 41), rgb(236, 236, 236));
-    
 }
 
 .ticker-wrapper {
     box-sizing: content-box;
-
 	width: 100%;
 	overflow: hidden;
 	padding-left: 100%;
 	background-image: url("../img/carbon.png");
+	box-shadow: inset 0px 0px 10px 6px rgba(0,0,0,0.75);
 }
 
 #team-select {
@@ -81,41 +90,69 @@
 }
 
 table {
-	border: 1px solid black;
-	padding: 4px;
-	border-collapse: collapse;
-	background-color: white;
+	background-image: url("../img/carbon2.png");
+	width: 100%;
+	color: white;
+	border-spacing: 0px;
 }
 
 .roster tr:hover {
-    border: 2px solid blue;
-    background-color: aliceblue !important;
+    background-color: rgba(255, 238, 0, 0.25);
     cursor: pointer;
 }
 
 .content {
 	width: 960px;
 	margin: 0 auto;
-	background-color:gray;
-	padding: 8px;
+	background-color: rgba(31, 31, 31,0.5);
+	padding: 16px;
 	margin-top: 48px;
+}
+
+.score-details {
+	width: 400px;
+	margin: 8px auto;
 }
 
 body {
 	margin: 0;
-	background-color: #071a05
+	background-color: rgb(25, 97, 49);
+}
+
+thead {
+	padding: 0;
+	margin: 0;
 }
 
 th {
-	border-bottom: 2px solid gray;
+	border-bottom: 2px solid rgb(80, 80, 80);
+	font-family: 'Saira', sans-serif;
+	background-color: black;
 }
 
 td {
 	padding: 6px 18px;
+	text-align: center;
+	margin: 0;
+	border-right: 2px solid rgb(80, 80, 80);
+	margin-right: 20px;
+}
+
+td:last-child {
+	border-right: 0px;
+}
+
+tbody {
+	padding: 0;
+	margin: 0;
 }
 
 tbody tr:nth-child(even) {
-	background-color: lightgray;
+	background-color: rgba(128,128,128,0.25);
+}
+
+tr {
+	margin: 0;
 }
 
 .scoreboard {
@@ -124,9 +161,6 @@ tbody tr:nth-child(even) {
 	height: 32px;
 	width: 600px;
 	margin: 0px auto;
-	padding: 4px;
-	background-image:
-	linear-gradient(to top, rgb(41, 41, 41), rgb(236, 236, 236));
 	font-family: 'Saira', sans-serif;
 	position: sticky;
 	top: 32px;
@@ -177,6 +211,13 @@ tbody tr:nth-child(even) {
 	padding-right: 10px;
 }
 
+.home-primary-text {
+	color: red;
+}
+
+.away-primary-text {
+	color: blue;
+}
 
 .home-gradient {
 	background-image: linear-gradient(to bottom, green, black);
@@ -235,17 +276,20 @@ tbody tr:nth-child(even) {
 
 .game-log {
 	list-style-type: none;
-	border: 2px solid black;
-	padding: 16px;
+	color: white;
 	height: 256px;
-	overflow-y: auto ;
-	background-color: white;
+	overflow-y: scroll;
+	background-image: url("../img/carbon2.png");
 	font-family: 'Consolas', monospace;
+	width: 100%;
+	margin:  0;
+	padding: 8px 16px;
+	margin-top: 8px;
 }
 
 .game-log li {
 	border-bottom: 1px solid lightgrey;
-	margin-bottom: 8px;
+	margin-bottom: 12px;
 	margin-left: 0;
 }
 
@@ -254,4 +298,5 @@ tbody tr:nth-child(even) {
 	font-size: 14px;
 	font-style: italic;
 	font-weight: bold;
+	font-family: 'Saira', sans-serif;
 }

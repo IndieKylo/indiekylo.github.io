@@ -191,12 +191,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__positions_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__player_js__ = __webpack_require__(8);
 
 
 
 
 
 
+ 
 
 // Run plays: inside middle, inside left, inside right, outside left, outside right
 // Pass plays: short L/M/R, medium L/M/R, long L/M/R, screen L/R
@@ -219,7 +221,7 @@ const PLAY_OUTCOME = {
 function AddTickerMessage(message) {
 	let _message = __WEBPACK_IMPORTED_MODULE_0_jquery___default()('<div></div>');
 	_message.addClass('ticker-item');
-	_message.html(message.toUpperCase() + " &middot;");
+	_message.text(message.toUpperCase() + " - ");
 	__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".ticker").append(_message);
 }
 
@@ -241,28 +243,19 @@ function draftCreate() {
 				_suffix = __WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__["a" /* PlayerGenerator */].GetSuffix();
 			}
 
-			let player = {
-				index: __WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__["a" /* PlayerGenerator */].GetPlayerIndex(),
-				firstName: __WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__["a" /* PlayerGenerator */].GetFirstName(),
-				lastName: __WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__["a" /* PlayerGenerator */].GetLastName(),
-				suffix: _suffix,
-				fullName: function() {
-					return this.firstName + " " + this.lastName + " " + this.suffix; 
-				},
-				age: Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(20,25),
-				city: __WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__["a" /* PlayerGenerator */].GetCity(),
-				position: _pos,
-				height: Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["b" /* NormalRange */])(__WEBPACK_IMPORTED_MODULE_4__positions_js__["a" /* Positions */][_pos].minHeight,__WEBPACK_IMPORTED_MODULE_4__positions_js__["a" /* Positions */][_pos].maxHeight),
-				weight: Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["b" /* NormalRange */])(__WEBPACK_IMPORTED_MODULE_4__positions_js__["a" /* Positions */][_pos].minWeight,__WEBPACK_IMPORTED_MODULE_4__positions_js__["a" /* Positions */][_pos].maxWeight),
-				college: __WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__["a" /* PlayerGenerator */].GetCollege(),
+			let _player = new __WEBPACK_IMPORTED_MODULE_6__player_js__["a" /* Player */](__WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__["a" /* PlayerGenerator */].GetPlayerIndex(),__WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__["a" /* PlayerGenerator */].GetFirstName(),__WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__["a" /* PlayerGenerator */].GetLastName());
+			_player.Suffix = _suffix;
+			_player.Age = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(20,24);
+			_player.City = __WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__["a" /* PlayerGenerator */].GetCity();
+			_player.Position = _pos;
+			_player.Height = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["b" /* NormalRange */])(__WEBPACK_IMPORTED_MODULE_4__positions_js__["a" /* Positions */][_pos].minHeight,__WEBPACK_IMPORTED_MODULE_4__positions_js__["a" /* Positions */][_pos].maxHeight);
+			_player.Weight = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["b" /* NormalRange */])(__WEBPACK_IMPORTED_MODULE_4__positions_js__["a" /* Positions */][_pos].minWeight,__WEBPACK_IMPORTED_MODULE_4__positions_js__["a" /* Positions */][_pos].maxWeight);
+			_player.College = __WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__["a" /* PlayerGenerator */].GetCollege();
 
-				combine: {
-					forty: Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["e" /* RandomRangeRaw */])(4.2,5.7),
-					bench: Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["b" /* NormalRange */])(10,35),
-				}
-			};
+			_player.Combine.Forty = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["e" /* RandomRangeRaw */])(4.2,5.7);
+			_player.Combine.Bench = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["b" /* NormalRange */])(10,35);
 
-			_currentTeam.Roster.push(player);
+			_currentTeam.Roster.push(_player);
 		}
 
 	}
@@ -280,11 +273,11 @@ function draftCreate() {
 		});
 		row.data("index",index);
 
-		row.html("<td>"+(player.index+1)+"</td><td>" + __WEBPACK_IMPORTED_MODULE_4__positions_js__["a" /* Positions */][player.position].abbr +
-		'</td><td style="font-weight: bold">' + player.firstName + " " + player.lastName + " " + player.suffix + '<br><span class="college">' + player.college +
-		"</span></td><td>" + player.age +
-		'</td><td>' + Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["a" /* InchesToString */])(player.height) +
-		'</td><td>' + player.weight + " lbs." +
+		row.html("<td>"+(player.Index+1)+"</td><td>" + __WEBPACK_IMPORTED_MODULE_4__positions_js__["a" /* Positions */][player.Position].abbr +
+		'</td><td style="font-weight: bold">' + player.GetFullName() + '<br><span class="college">' + player.College +
+		"</span></td><td>" + player.Age +
+		'</td><td>' + Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["a" /* InchesToString */])(player.Height) +
+		'</td><td>' + player.Weight + " lbs." +
 		'</td><td><input type="button" value="Draft"></td>');
 
 		draftListElement.append(row);
@@ -312,7 +305,7 @@ function gameInit() {
 	draftCreate();	
 	SetupGame();
 
-	setInterval(RunPlay, 500);
+	setInterval(SimulatePlay, 500);
 }
 
 function SetupGame() {
@@ -396,12 +389,30 @@ function UpdateGameGUI() {
 	awayScore.html(currentGame.GameData["awayScore"]);
 }
 
+function UpdateGameStats(game) {
+	__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".home-rush-yards").text(game.GameData["homeRushYards"]);
+	__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".home-pass-yards").text(game.GameData["homePassYards"]);
+	__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".home-total-yards").text(game.GameData.homeTotalYards());
+	__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".away-rush-yards").text(game.GameData["awayRushYards"]);
+	__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".away-pass-yards").text(game.GameData["awayPassYards"]);
+	__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".away-total-yards").text(game.GameData.awayTotalYards());
+}
+
 function SetGameSituation(game,down,distance,side,spot,homeBall) {
 	game.GameData["down"] = down;
 	game.GameData["distance"] = distance;
 	game.GameData["ballAt"] = spot;
 	game.GameData["ballSide"] = side;
 
+	CheckRedzoneGoaline(game);
+
+	game.GameData["homeBall"] = homeBall;
+
+	return true;
+
+}
+
+function CheckRedzoneGoaline(game) {
 	if (game.GameData["ballAt"] <= 20) {
 		if (game.GameData["ballSide"] == 1 && !game.GameData["homeBall"]) {
 			game.GameData["redzone"] = true;
@@ -412,7 +423,7 @@ function SetGameSituation(game,down,distance,side,spot,homeBall) {
 		game.GameData["redzone"] = false;
 	}
 	
-	if (game.GameData["ballAt"] <= 10 && down == 1) {
+	if (game.GameData["ballAt"] <= 10 && game.GameData.down == 1) {
 		if (game.GameData["ballSide"] == 1 && !game.GameData["homeBall"]) {
 			game.GameData["goalline"] = true;
 		} else if (game.GameData["ballSide"] == -1 && game.GameData["homeBall"]) {
@@ -421,9 +432,6 @@ function SetGameSituation(game,down,distance,side,spot,homeBall) {
 	} else {
 		game.GameData["goalline"] = false;
 	}
-
-	game.GameData["homeBall"] = homeBall;
-
 }
 
 function AdvanceBall(game,yards) {
@@ -460,90 +468,73 @@ function AdvanceBall(game,yards) {
 			}
 		}
 	}
+
+	CheckRedzoneGoaline(game);
 }
 
-function SetTouchback(game,homeBall) {
+function SetTouchback(game) {
 	// Who gets the ball after the touchback
-	if (homeBall) {
-		SetGameSituation(game,1,10,1,25,true);
+	if (!game.GameData["homeBall"]) {
+		return SetGameSituation(game,1,10,1,25,true);
 	} else {
-		SetGameSituation(game,1,10,-1,25,false);
+		return SetGameSituation(game,1,10,-1,25,false);
 	}
+
 }
 
-function RunPlay(gain=0, loops=1) {
-	if (currentGame.GameData["timeRemaining"] <= 0) {
-		return;
+function PlayResultToString(result) {
+	let _resultText = "";
+
+	switch (result.Type) {
+		case PLAY_TYPE.RUN:
+			_resultText = "UNNAMED RB" + " rushed to the right for " + result.Yards + " yards.";
+		break;
+
+		case PLAY_TYPE.PASS:
+			// TODO: Add incomplete passes
+			_resultText = "UNNAMED QB" + " completed a pass to " + "UNNAMED WR/TE/RB" + " for " + result.Yards + " yards.";
+		break;
+
+		case PLAY_TYPE.FG:
+			_resultText = "IT'S GOOD! " + "UNNAMED KICKER" + " made kick from " + result.Yards + " yards.";
+		break;
+
+		case PLAY_TYPE.PUNT:
+			_resultText = "PUNT! " + "RANDOM PUNTER" + " punted it " + result.Yards + " for a touchback.";
+		break;		
 	}
 
-	for (let i = 0; i < loops; i++) {
-		let playResult = __WEBPACK_IMPORTED_MODULE_0_jquery___default()("<li></li>");
-		
-		let playInfo = __WEBPACK_IMPORTED_MODULE_0_jquery___default()("<span></span>");
-		playInfo.addClass("play-info");
+	return _resultText;
+}
 
-		let playType = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(1,6);
 
-		let cg = currentGame;
+// Selects the best play for the situation
+function RunPlay(game) {
+		let _playResult = { 
+			Type: PLAY_TYPE.RUN, 
+			Yards: 0, 
+			Turnover: false,
+			Points: 0,
+		 };
 
 		let _gain = 0;
-
-		let _side = "";
-		switch(cg.GameData["ballSide"]) {
-			case 1:
-				_side = cg.Home.City;
-			break;
-			case -1:
-				_side = cg.Away.City;
-			break;
-			case 0:
-				_side = "";
-			break;
-		}
-
-		let _down = "1st";
-		let _remaining = cg.GameData["goalline"] ? "GOAL" : cg.GameData["distance"];
-		let _ball = cg.GameData["homeBall"] ? cg.Home.City : cg.Away.City;
-		
-		_down = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["c" /* NumberSuffix */])(cg.GameData["down"]);
-
-		let _seconds = "00";
-		let _quarter = "1st";
-
-		if (currentGame.GameData["secondsRemaining"] < 10) {
-			_seconds = "0" + currentGame.GameData["secondsRemaining"];
-		} else {
-			_seconds = currentGame.GameData["secondsRemaining"];
-		}
-
-		if (currentGame.GameData["quarter"] == 5) {
-			_quarter = "OT";
-		} else {					
-			_quarter = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["c" /* NumberSuffix */])(currentGame.GameData.quarter);
-		}
-
-		playInfo.text(cg.GameData["minutesRemaining"] + ":" + _seconds + " " + _quarter + " Quarter - " + _ball + " " + 
-		_down + " & " + _remaining + ", at " + _side + " " + cg.GameData["ballAt"]);
-
+		let _playType = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(1,5);
+		let _turnover = false;
+		let _points = 0;
 		// Field goal
-		if (cg.GameData.down == 4) { 
-			if(cg.GameData.toEndzone() <= 45) {
+		if (game.GameData.down == 4) { 
+			if(game.GameData.toEndzone() <= 45) {
 				_gain = 0;
-				playResult.text("IT'S GOOD! " + cg.Home.Roster[Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(0,cg.Home.Roster.length-1)].fullName() + " made kick from  " + cg.GameData.toEndzone() + " yards.");
-				PointsScored(cg,3);
-				AddTickerMessage(playResult.text());
+				PointsScored(game,3);
 			} else {
-				// TODO: Put this code somewhere
-
 				_gain = 0;
-				SetTouchback(cg);
-				// TODO: Compute actual punt distance
-				playResult.text("PUNT! " + cg.Home.Roster[Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(0,cg.Home.Roster.length-1)].fullName() + " kicked a punt.");
+				_turnover = SetTouchback(game);
+
 			}
-		} else if (playType == 1) {
+		} else if (_playType == 1) {
 			let outcome = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(0,100);
 			if (outcome > 99) {
-				_gain = cg.GameData.toEndzone();
+				_gain = game.GameData.toEndzone();
 			} else if (outcome > 90) {
 				_gain = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(10,30);
 			} else if (outcome > 65) {
@@ -553,52 +544,104 @@ function RunPlay(gain=0, loops=1) {
 			} else {
 				_gain = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(-4,2);
 			}
-
-			if (cg.GameData["homeBall"]) { 
-				cg.GameData["homeRushYards"] += _gain;
-			} else {
-				cg.GameData["awayRushYards"] += _gain;
-			}
-
-			playResult.text(cg.Home.Roster[Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(0,cg.Home.Roster.length-1)].fullName() + " rushed to the right for " + Math.min(_gain,cg.GameData.toEndzone()) + " yards.");
 		} else {
 			let outcome = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(0,100);
 			if (outcome > 99) {
-				_gain = cg.GameData.toEndzone();
+				_gain = game.GameData.toEndzone();
 			} else if (outcome > 96) {
 				_gain = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(10,25);
 			} else if (outcome > 82) {
 				_gain = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(4,9);
-			} else if (outcome > 40) {
+			} else if (outcome > 30) {
 				_gain = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(1,4);
 			} else {
 				_gain = 0;
 			}
-
-			if (cg.GameData["homeBall"]) { 
-				cg.GameData["homePassYards"] += _gain;
-			} else {
-				cg.GameData["awayPassYards"] += _gain;
-			}
-
-			if (_gain == 0) {
-				playResult.text("Incomplete pass.");
-			} else {
-				playResult.text(cg.Home.Roster[Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(0,cg.Home.Roster.length-1)].fullName() + " completed a pass to " + cg.Home.Roster[Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(0,cg.Home.Roster.length-1)].fullName() +
-				" for " + Math.min(_gain,cg.GameData.toEndzone()) + " yards.");
-			}
-
-			
 		}
 
-		if (gain != 0) {
-			_gain = gain;
-			playResult.text("Somehow, you lost 5 yards");
-		}
+		_playResult.Yards = _gain;
+		_playResult.Turnover = _turnover;
+		_playResult.Points = _points;
+		return _playResult;
+}
 
-		PassTime(6 + Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(1,4) + Math.abs(_gain) * 2);
+function SimulatePlay(gain=0) {
+	if (currentGame.GameData["timeRemaining"] <= 0) {
+		return;
+	}
+	let turnover = false;
+	let _gain = 0;
 
-		// First down made?
+	let playResult = __WEBPACK_IMPORTED_MODULE_0_jquery___default()("<li></li>");
+	
+	let playInfo = __WEBPACK_IMPORTED_MODULE_0_jquery___default()("<span></span>");
+	playInfo.addClass("play-info");
+
+	let cg = currentGame;
+
+	let _side = "";
+	switch(cg.GameData["ballSide"]) {
+		case 1:
+			_side = cg.Home.City;
+		break;
+		case -1:
+			_side = cg.Away.City;
+		break;
+		case 0:
+			_side = "";
+		break;
+	}
+
+	let _down = "1st";
+	let _remaining = cg.GameData["goalline"] ? "GOAL" : cg.GameData["distance"];
+	let _ball, _ballClass = "";
+	if (cg.GameData["homeBall"]) {
+			_ball = cg.Home.City;
+			_ballClass = "home-primary-text";
+	} else {
+		_ball = cg.Away.City;
+		_ballClass= "away-primary-text";
+	}
+	
+	_down = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["c" /* NumberSuffix */])(cg.GameData["down"]);
+
+	let _seconds = "00";
+	let _quarter = "1st";
+
+	if (currentGame.GameData["secondsRemaining"] < 10) {
+		_seconds = "0" + currentGame.GameData["secondsRemaining"];
+	} else {
+		_seconds = currentGame.GameData["secondsRemaining"];
+	}
+
+	if (currentGame.GameData["quarter"] == 5) {
+		_quarter = "OT";
+	} else {					
+		_quarter = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["c" /* NumberSuffix */])(currentGame.GameData.quarter);
+	}
+
+	playInfo.html(cg.GameData["minutesRemaining"] + ":" + _seconds + " " + _quarter + ' Quarter - <span class="text-shadow ' + _ballClass + '">' +  _ball + "</span> " + 
+	_down + " & " + _remaining + ", at " + _side + " " + cg.GameData["ballAt"]);
+
+	let _result = RunPlay(cg,playResult);
+
+	_gain = _result.Yards;
+	turnover = _result.Turnover; 
+
+	if (gain != 0) {
+		_gain = gain;
+		playResult.text("Somehow, you lost 5 yards");
+	}
+
+	PassTime(6 + Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(1,4) + Math.abs(_gain) * 2);
+	
+	
+	UpdateGameGUI();
+
+	playResult.text(PlayResultToString(_result));
+
+	// First down made?
+	if (!turnover) {
 		if (_gain >= cg.GameData["distance"]) {
 			cg.GameData["down"] = 1;
 			cg.GameData["distance"] = Math.min(10,cg.GameData.toEndzone());
@@ -608,35 +651,35 @@ function RunPlay(gain=0, loops=1) {
 				cg.GameData["down"]++;
 			} else {
 				playResult.text("TURNOVER ON DOWNS! " + playResult.text());
-				SetGameSituation(cg,1,10,cg.GameData["ballSide"],cg.GameData["ballAt"],!cg.GameData["homeBall"]);
+				turnover = SetGameSituation(cg,1,10,cg.GameData["ballSide"],cg.GameData["ballAt"],!cg.GameData["homeBall"]);
 			}
 		}
-
-		AdvanceBall(cg,_gain);
-
-		if (cg.GameData["ballAt"] <= 0) {
-			// TODO: Account for safeties
-			playResult.text("TOUCHDOWN! " + playResult.text());
-			AddTickerMessage(playResult.text());
-			PointsScored(cg,7);
-		}		
-
-		__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".home-rush-yards").text(cg.GameData["homeRushYards"]);
-		__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".home-pass-yards").text(cg.GameData["homePassYards"]);
-		__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".home-total-yards").text(cg.GameData.homeTotalYards());
-		__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".away-rush-yards").text(cg.GameData["awayRushYards"]);
-		__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".away-pass-yards").text(cg.GameData["awayPassYards"]);
-		__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".away-total-yards").text(cg.GameData.awayTotalYards());
-			
-		__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#down-distance").html(_down + " & " + cg.GameData["distance"]);
-
-		UpdateGameGUI();
-
-		playResult.prepend(playInfo);
-		__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".game-log").prepend(playResult);
-		//$(".game-log").scrollTop($(".game-log").prop("scrollHeight")); 
 	}
+
+	AdvanceBall(cg,_gain);
+
+	if (cg.GameData["ballAt"] <= 0) {
+		// TODO: Account for safeties
+		playResult.text("TOUCHDOWN! " + playResult.text());
+		AddTickerMessage(playResult.text());
+		PointsScored(cg,7);
+	}		
+
+	UpdateGameStats(cg);
+		
+	__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#down-distance").html(_down + " & " + cg.GameData["distance"]);
+	if (cg.GameData["redzone"]) {
+		__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".down-info").css("background-color","red");
+	} else {
+		__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".down-info").css("background-color","default");
+	}
+
+	playResult.prepend(playInfo);
+	__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".game-log").prepend(playResult);
+	__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".home-primary-text").css("color",cg.Home.GetPrimary());
+	__WEBPACK_IMPORTED_MODULE_0_jquery___default()(".away-primary-text").css("color",cg.Away.GetPrimary());
 }
+
 
 window.onLoad = gameInit();
 
@@ -11389,6 +11432,52 @@ let Positions = {
     },
 };
 
+
+/***/ }),
+/* 7 */,
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Player; });
+
+
+function Player(index, first, last) {
+    let _index = index;
+    let _first = first;
+    let _last = last;
+    let _suffix = "";
+    let _age = 0;
+    let _height = 0;
+    let _weight = 0;
+    let _city = "";
+    let _college = "";
+    let _position = "";
+    let _combine = {
+        Forty: 0,
+        Bench: 0
+    };
+
+    let getFullName = function() {
+        return (_first + " " + _last + " " + _suffix).trim();
+    }
+
+    return {
+        Index: _index,
+        FirstName: _first,
+        LastName: _last,
+        Suffix: _suffix,
+        Combine: _combine,
+        Height: _height,
+        Weight: _weight,
+        Age: _age,
+        City: _city,
+        College: _college,
+        Position: _position,
+
+        GetFullName: getFullName,
+    };
+}
 
 /***/ })
 /******/ ]);
