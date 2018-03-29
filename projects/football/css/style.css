@@ -68,6 +68,10 @@ h3 {
     }
 }
 
+.right {
+	float: right;
+}
+
 .ticker {
     padding: 6px 0;
 	padding-right: 100%;
@@ -107,6 +111,31 @@ table {
 	background-color: rgba(31, 31, 31,0.5);
 	padding: 16px;
 	margin-top: 48px;
+}
+
+.nav-container {
+	width: 960px;
+	height: 100%;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+}
+
+.nav-button {
+	text-decoration: none;
+	font-family: 'Saira', sans-serif;
+	color: white;
+	display: inline-flex;
+	width: 64px;
+	background-color: grey;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	margin-right: 4px;
+}
+
+.nav-button:hover {
+	background-color: black;
 }
 
 .score-details {

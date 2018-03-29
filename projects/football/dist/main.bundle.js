@@ -191,7 +191,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__playerGenerator_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__positions_js__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__util_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__player_js__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__player_js__ = __webpack_require__(7);
 
 
 
@@ -260,11 +260,7 @@ function draftCreate() {
 
 	}
 
-
-	let draftListElement = __WEBPACK_IMPORTED_MODULE_0_jquery___default()("#draft-list");
-
 	__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#roster-title").text("2017 " + __WEBPACK_IMPORTED_MODULE_1__league_js__["b" /* TEAM_LIST */][0].City + " " + __WEBPACK_IMPORTED_MODULE_1__league_js__["b" /* TEAM_LIST */][0].Name + " Roster");
-
 
 	__WEBPACK_IMPORTED_MODULE_1__league_js__["b" /* TEAM_LIST */][0].Roster.forEach(function (player,index) {
 		let row = __WEBPACK_IMPORTED_MODULE_0_jquery___default()('<tr></tr>');
@@ -280,7 +276,7 @@ function draftCreate() {
 		'</td><td>' + player.Weight + " lbs." +
 		'</td><td><input type="button" value="Draft"></td>');
 
-		draftListElement.append(row);
+		__WEBPACK_IMPORTED_MODULE_0_jquery___default()("#draft-list").append(row);
 	});
 }
 
@@ -300,7 +296,7 @@ function playerTooltip(e) {
 function gameInit() {
 	let nav = __WEBPACK_IMPORTED_MODULE_0_jquery___default()("<div></div>");
 	nav.addClass("nav");
-	__WEBPACK_IMPORTED_MODULE_0_jquery___default()("body").append(nav);
+	//$("body").append(nav);
 	Object(__WEBPACK_IMPORTED_MODULE_1__league_js__["a" /* BuildLeague */])();
 	draftCreate();	
 	SetupGame();
@@ -524,14 +520,19 @@ function RunPlay(game) {
 		// Field goal
 		if (game.GameData.down == 4) { 
 			if(game.GameData.toEndzone() <= 45) {
+				_playResult.Type = PLAY_TYPE.FG;
+				_playResult.Yards = game.GameData.toEndzone();
 				_gain = 0;
 				PointsScored(game,3);
 			} else {
+				_playResult.Type = PLAY_TYPE.PUNT;
+				_playResult.Yards = 0;
 				_gain = 0;
 				_turnover = SetTouchback(game);
 
 			}
 		} else if (_playType == 1) {
+			_playResult.Type = PLAY_TYPE.RUN;
 			let outcome = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(0,100);
 			if (outcome > 99) {
 				_gain = game.GameData.toEndzone();
@@ -544,7 +545,9 @@ function RunPlay(game) {
 			} else {
 				_gain = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(-4,2);
 			}
+			_playResult.Yards = _gain;
 		} else {
+			_playResult.Type = PLAY_TYPE.PASS;
 			let outcome = Object(__WEBPACK_IMPORTED_MODULE_5__util_js__["d" /* RandomRange */])(0,100);
 			if (outcome > 99) {
 				_gain = game.GameData.toEndzone();
@@ -557,9 +560,9 @@ function RunPlay(game) {
 			} else {
 				_gain = 0;
 			}
+			_playResult.Yards = _gain;
 		}
 
-		_playResult.Yards = _gain;
 		_playResult.Turnover = _turnover;
 		_playResult.Points = _points;
 		return _playResult;
@@ -11434,8 +11437,7 @@ let Positions = {
 
 
 /***/ }),
-/* 7 */,
-/* 8 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
