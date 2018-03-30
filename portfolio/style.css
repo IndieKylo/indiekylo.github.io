@@ -41,7 +41,7 @@ body {
 }
 
 .text-box {
-    font-size: 48px;
+    font-size: 46px;
     font-family: Helvetica, 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: white;
     background-color: rgb(21, 59, 77, 0.8);
@@ -51,7 +51,7 @@ body {
 }
 
 .blurb {
-    padding: 16px 64px;
+    padding: 16px 32px;
 }
 
 .blurb-title {
