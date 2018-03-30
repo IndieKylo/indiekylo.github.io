@@ -7,7 +7,7 @@ body {
     padding: 0;
 }
 
-.image1, .image2, .image3 {
+.image1, .image2, .image3, .image4 {
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
@@ -28,23 +28,26 @@ body {
     background-image: url("../img/coast.jpg");
 }
 
+.image4 {
+    background-image: url("../img/trees.jpg");
+}
+
 .text-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    position: absolute;
-    top: 50%;
-    text-align: center;
+    height: 100%;
 }
 
 .text-box {
     font-size: 48px;
     font-family: Helvetica, 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color: white;
-    background-color: rgb(21, 59, 77);
+    background-color: rgb(21, 59, 77, 0.8);
     padding: 16px;
-    display: inline-block;
     letter-spacing: 8px;
-
-    box-shadow: 2px 2px 8px black;
+    text-shadow: 2px 2px 8px black;
 }
 
 .navbar {
